@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>oplm-rules</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.springsource.sts.grails.core.nature</nature>
+		<nature>org.eclipse.jdt.groovy.core.groovyNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>hibernate-1.2.0.RC2-grails-app-i18n</name>
+			<type>2</type>
+			<location>C:/Users/snehal/.grails/1.2.0.RC2/projects/oplm-rules/plugins/hibernate-1.2.0.RC2/grails-app/i18n</location>
+		</link>
+		<link>
+			<name>tomcat-1.2.0.RC2-src-groovy</name>
+			<type>2</type>
+			<location>C:/Users/snehal/.grails/1.2.0.RC2/projects/oplm-rules/plugins/tomcat-1.2.0.RC2/src/groovy</location>
+		</link>
+	</linkedResources>
+</projectDescription>

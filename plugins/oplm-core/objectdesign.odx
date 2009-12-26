@@ -1,0 +1,3156 @@
+<project>
+  <packages>
+    <javaPackage name="org.oplm.core.model.util">
+      <projectName>oplm-core</projectName>
+      <path>src/java/org/oplm/core/model/util</path>
+      <classes>
+        <classifier name="HibernateHelper">
+          <stereotype>Persistence Helper</stereotype>
+          <variables>
+            <variable name="singleton">
+              <type class="org.oplm.core.model.util.HibernateHelper"/>
+              <multiplicity>0..1</multiplicity>
+              <modifiers>8</modifiers>
+              <access>2</access>
+              <value>new HibernateHelper()</value>
+            </variable>
+            <variable name="factory">
+              <type>javax.persistence.EntityManagerFactory</type>
+              <multiplicity>0..1</multiplicity>
+              <access>2</access>
+            </variable>
+            <variable name="currentEntityManager">
+              <type>ThreadLocal</type>
+              <multiplicity>0..1</multiplicity>
+              <access>2</access>
+              <value>new ThreadLocal();</value>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>2</access>
+              <generatedName>HibernateHelper</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="getInstance">
+              <type class="org.oplm.core.model.util.HibernateHelper"/>
+              <multiplicity>0..1</multiplicity>
+              <modifiers>8</modifiers>
+              <access>1</access>
+              <generatedName>getInstance</generatedName>
+              <method>
+                <statements>
+                  <javaCode>return singleton;</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="getFactory">
+              <type>javax.persistence.EntityManagerFactory</type>
+              <multiplicity>0..1</multiplicity>
+              <modifiers>32</modifiers>
+              <access>1</access>
+              <generatedName>getFactory</generatedName>
+              <method>
+                <statements>
+                  <javaCode>if(factory == null) { factory=javax.persistence.Persistence.createEntityManagerFactory(&quot;oplm-core&quot;); }</javaCode>
+                  <javaCode>return factory;</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="close">
+              <type basicType="void"/>
+              <multiplicity>0</multiplicity>
+              <modifiers>32</modifiers>
+              <access>1</access>
+              <generatedName>close</generatedName>
+              <method>
+                <statements>
+                  <javaCode>closeEntityManager();</javaCode>
+                  <javaCode>if (factory != null) { factory.close(); factory = null; }</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="getEntityManager">
+              <type>javax.persistence.EntityManager</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <generatedName>getEntityManager</generatedName>
+              <method>
+                <statements>
+                  <javaCode>javax.persistence.EntityManager entityManager=(javax.persistence.EntityManager)currentEntityManager.get();</javaCode>
+                  <javaCode>if(entityManager == null || !entityManager.isOpen()) { entityManager=getFactory().createEntityManager(); currentEntityManager.set(entityManager); }</javaCode>
+                  <javaCode>return entityManager;</javaCode>
+                </statements>
+              </method>
+            </operation>
+            <operation name="closeEntityManager">
+              <type>void</type>
+              <multiplicity>0</multiplicity>
+              <access>1</access>
+              <generatedName>closeEntityManager</generatedName>
+              <method>
+                <statements>
+                  <javaCode>javax.persistence.EntityManager entityManager = (javax.persistence.EntityManager)currentEntityManager.get();</javaCode>
+                  <javaCode>if (entityManager != null &amp;&amp; entityManager.isOpen()) { entityManager.close(); }</javaCode>
+                  <javaCode>currentEntityManager.set(null);</javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>HibernateHelper.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.util{HibernateHelper.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+      </classes>
+      <rootName>src/java</rootName>
+      <generateHibernateHelper>true</generateHibernateHelper>
+    </javaPackage>
+    <javaPackage name="org.oplm.core.model.business">
+      <projectName>oplm-core</projectName>
+      <path>src/java/org/oplm/core/model/business</path>
+      <defaultClassStereotype>Persistent</defaultClassStereotype>
+      <classes>
+        <classifier name="Product">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="number">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="name">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="description">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Lob"/>
+              </tags>
+            </variable>
+            <variable name="isMajorVersion">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="majorVersion">
+              <type basicType="int"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="minorVersion">
+              <type basicType="int"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="frozen">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="checkedOut">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="checkedOutSuperseded">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="superseded">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="productMaster">
+              <type class="org.oplm.core.model.business.ProductMaster"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.ProductMaster()</value>
+              <inverse class="org.oplm.core.model.business.ProductMaster" name="revisions"/>
+            </variable>
+            <variable name="checkedOutAs">
+              <type class="org.oplm.core.model.business.Product"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Product" name="checkedOutFrom"/>
+            </variable>
+            <variable name="checkedOutFrom">
+              <type class="org.oplm.core.model.business.Product"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Product" name="checkedOutAs"/>
+            </variable>
+            <variable name="versionedAs">
+              <type class="org.oplm.core.model.business.Product"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Product" name="versionedFrom"/>
+            </variable>
+            <variable name="versionedFrom">
+              <type class="org.oplm.core.model.business.Product"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Product" name="versionedAs"/>
+            </variable>
+            <variable name="createdBy">
+              <type class="org.oplm.core.model.admin.User"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.User" name="createdProducts"/>
+            </variable>
+            <variable name="lastUpdatedBy">
+              <type class="org.oplm.core.model.admin.User"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.User" name="lastUpdatedProducts"/>
+            </variable>
+            <variable name="usesProducts">
+              <type class="org.oplm.core.model.business.ProductStructure"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.ProductStructure()</value>
+              <inverse class="org.oplm.core.model.business.ProductStructure" name="product"/>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>890340595</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>product_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="documents">
+              <type class="org.oplm.core.model.business.ProductDocument"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.ProductDocument()</value>
+              <inverse class="org.oplm.core.model.business.ProductDocument" name="product"/>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Product</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Product.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.business{Product.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="ProductMaster">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="name">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="number">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="revisions">
+              <type class="org.oplm.core.model.business.Product"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Product" name="productMaster"/>
+            </variable>
+            <variable name="unitOfMeasure">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="usedByProducts">
+              <type class="org.oplm.core.model.business.ProductStructure"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.ProductStructure()</value>
+              <inverse class="org.oplm.core.model.business.ProductStructure" name="productMaster"/>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-631580363</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>productmaster_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>ProductMaster</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>ProductMaster.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.business{ProductMaster.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="Document">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="number">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="name">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="description">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Lob"/>
+              </tags>
+            </variable>
+            <variable name="isMajorVersion">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="majorVersion">
+              <type basicType="int"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="minorVersion">
+              <type basicType="int"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="frozen">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="checkedOut">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="CheckedOutSuperseded">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="superseded">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="documentMaster">
+              <type class="org.oplm.core.model.business.DocumentMaster"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.DocumentMaster()</value>
+              <inverse class="org.oplm.core.model.business.DocumentMaster" name="revisions"/>
+            </variable>
+            <variable name="createdBy">
+              <type class="org.oplm.core.model.admin.User"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.User" name="createdDocuments"/>
+            </variable>
+            <variable name="lastUpdatedBy">
+              <type class="org.oplm.core.model.admin.User"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.User" name="updatedDocuments"/>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-598730345</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>document_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="usesDocuments">
+              <type class="org.oplm.core.model.business.DocumentStructure"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.DocumentStructure()</value>
+              <inverse class="org.oplm.core.model.business.DocumentStructure" name="document"/>
+            </variable>
+            <variable name="products">
+              <type class="org.oplm.core.model.business.ProductDocument"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.ProductDocument()</value>
+              <inverse class="org.oplm.core.model.business.ProductDocument" name="document"/>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Document</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Document.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.business{Document.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="DocumentMaster">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="name">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="number">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="revisions">
+              <type class="org.oplm.core.model.business.Document"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Document" name="documentMaster"/>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-1730649383</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>documentmaster_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="usedByDocuments">
+              <type class="org.oplm.core.model.business.DocumentStructure"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.DocumentStructure()</value>
+              <inverse class="org.oplm.core.model.business.DocumentStructure" name="documentMaster"/>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>DocumentMaster</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>DocumentMaster.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.business{DocumentMaster.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="ProductStructure">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="quantity">
+              <type basicType="float"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="productMaster">
+              <type class="org.oplm.core.model.business.ProductMaster"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.ProductMaster" name="usedByProducts"/>
+            </variable>
+            <variable name="product">
+              <type class="org.oplm.core.model.business.Product"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Product" name="usesProducts"/>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>774416832</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>productstructure_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>ProductStructure</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>ProductStructure.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.business{ProductStructure.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="DocumentStructure">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-1055060580</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>documentstructure_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="document">
+              <type class="org.oplm.core.model.business.Document"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Document" name="usesDocuments"/>
+            </variable>
+            <variable name="documentMaster">
+              <type class="org.oplm.core.model.business.DocumentMaster"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.DocumentMaster" name="usedByDocuments"/>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>DocumentStructure</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>DocumentStructure.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.business{DocumentStructure.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="ProductDocument">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-780527826</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>productdocuments_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="type">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="product">
+              <type class="org.oplm.core.model.business.Product"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Product" name="documents"/>
+            </variable>
+            <variable name="document">
+              <type class="org.oplm.core.model.business.Document"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Document" name="products"/>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>ProductDocument</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>ProductDocument.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.business{ProductDocument.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+      </classes>
+      <diagrams>
+        <classDiagram name="BusinessClassDiagram">
+          <showAttributes>true</showAttributes>
+          <showOperations>true</showOperations>
+          <classSymbol id="1">
+            <x>346</x>
+            <y>458</y>
+            <class class="org.oplm.core.model.business.ProductDocument"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+              <attribute>type</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="2">
+            <x>741</x>
+            <y>890</y>
+            <class class="org.oplm.core.model.business.DocumentStructure"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="3">
+            <x>708</x>
+            <y>349</y>
+            <class class="org.oplm.core.model.business.ProductStructure"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>quantity</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <tagSymbol id="4">
+            <x>535</x>
+            <y>156</y>
+            <connectedTo symbol="11"/>
+            <tag class="org.oplm.core.model.business.Product" variable="description" id="@Lob"/>
+            <showNotSet>true</showNotSet>
+          </tagSymbol>
+          <tagSymbol id="5">
+            <x>471</x>
+            <y>798</y>
+            <connectedTo symbol="8"/>
+            <tag class="org.oplm.core.model.business.Document" variable="description" id="@Lob"/>
+            <showNotSet>true</showNotSet>
+          </tagSymbol>
+          <classSymbol id="6">
+            <x>747</x>
+            <y>602</y>
+            <class class="org.oplm.core.model.business.DocumentMaster"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>name</attribute>
+              <attribute>number</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="7">
+            <y>337</y>
+            <class class="org.oplm.core.model.admin.User"/>
+            <attributes autoDisplay="293" accessVisible="true">
+              <attribute>username</attribute>
+              <attribute>passwd</attribute>
+              <attribute>password</attribute>
+              <attribute>email</attribute>
+              <attribute>active</attribute>
+              <attribute>passwdExpired</attribute>
+              <attribute>locked</attribute>
+              <attribute>serialVersionUID</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="8">
+            <x>341</x>
+            <y>704</y>
+            <class class="org.oplm.core.model.business.Document"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>number</attribute>
+              <attribute>name</attribute>
+              <attribute>description</attribute>
+              <attribute>isMajorVersion</attribute>
+              <attribute>majorVersion</attribute>
+              <attribute>minorVersion</attribute>
+              <attribute>frozen</attribute>
+              <attribute>checkedOut</attribute>
+              <attribute>CheckedOutSuperseded</attribute>
+              <attribute>superseded</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="9">
+            <y>20</y>
+            <class class="org.oplm.core.model.admin.Space"/>
+            <attributes autoDisplay="293" accessVisible="true">
+              <attribute>name</attribute>
+              <attribute>location</attribute>
+              <attribute>hostType</attribute>
+              <attribute>owner</attribute>
+              <attribute>ownerType</attribute>
+              <attribute>serialVersionUID</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="10">
+            <x>713</x>
+            <y>83</y>
+            <class class="org.oplm.core.model.business.ProductMaster"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>name</attribute>
+              <attribute>number</attribute>
+              <attribute>unitOfMeasure</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="11">
+            <x>327</x>
+            <y>62</y>
+            <class class="org.oplm.core.model.business.Product"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>number</attribute>
+              <attribute>name</attribute>
+              <attribute>description</attribute>
+              <attribute>isMajorVersion</attribute>
+              <attribute>majorVersion</attribute>
+              <attribute>minorVersion</attribute>
+              <attribute>frozen</attribute>
+              <attribute>checkedOut</attribute>
+              <attribute>checkedOutSuperseded</attribute>
+              <attribute>superseded</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <association id="12">
+            <x>515</x>
+            <y>85</y>
+            <assocEnd-0 class="org.oplm.core.model.business.ProductMaster" name="revisions"/>
+            <assocEnd-1 class="org.oplm.core.model.business.Product" name="productMaster"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.9842932</atX>
+              <atY>0.09030101</atY>
+            </point>
+            <point>
+              <connectX symbol="10"/>
+              <connectY symbol="10"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.010416667</atX>
+              <atY>0.17894737</atY>
+            </point>
+            <end-1>
+              <x>518</x>
+              <y>109</y>
+              <w>54</w>
+              <h>34</h>
+              <connectedSymbol symbol="11"/>
+              <text>+revisions</text>
+              <text>1</text>
+            </end-1>
+            <end-2>
+              <x>713</x>
+              <y>109</y>
+              <w>86</w>
+              <h>34</h>
+              <connectedSymbol symbol="10"/>
+              <text>+productMaster</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="13">
+            <x>504</x>
+            <y>193</y>
+            <assocEnd-0 class="org.oplm.core.model.business.Product" name="checkedOutFrom"/>
+            <assocEnd-1 class="org.oplm.core.model.business.Product" name="checkedOutAs"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.92670155</atX>
+              <atY>0.4949833</atY>
+            </point>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.973822</atX>
+              <atY>0.5618729</atY>
+            </point>
+            <end-1>
+              <x>513</x>
+              <y>327</y>
+              <w>100</w>
+              <h>34</h>
+              <connectedSymbol symbol="11"/>
+              <text>+checkedOutFrom</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>327</x>
+              <y>193</y>
+              <w>85</w>
+              <h>34</h>
+              <connectedSymbol symbol="11"/>
+              <text>+checkedOutAs</text>
+              <text>0..1</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="14">
+            <x>505</x>
+            <y>207</y>
+            <assocEnd-0 class="org.oplm.core.model.business.Product" name="versionedFrom"/>
+            <assocEnd-1 class="org.oplm.core.model.business.Product" name="versionedAs"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.93193716</atX>
+              <atY>0.548495</atY>
+            </point>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.9790576</atX>
+              <atY>0.4916388</atY>
+            </point>
+            <end-1>
+              <x>514</x>
+              <y>62</y>
+              <w>87</w>
+              <h>34</h>
+              <connectedSymbol symbol="11"/>
+              <text>+versionedFrom</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>327</x>
+              <y>207</y>
+              <w>72</w>
+              <h>34</h>
+              <connectedSymbol symbol="11"/>
+              <text>+versionedAs</text>
+              <text>0..1</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="15">
+            <x>166</x>
+            <y>179</y>
+            <assocEnd-0 class="org.oplm.core.model.admin.User" name="spaces"/>
+            <assocEnd-1 class="org.oplm.core.model.admin.Space" name="createdBy"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="9"/>
+              <connectY symbol="9"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.6283186</atX>
+              <atY>0.8111111</atY>
+            </point>
+            <point>
+              <connectX symbol="7"/>
+              <connectY symbol="7"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.41984734</atX>
+              <atY>0.16111112</atY>
+            </point>
+            <end-1>
+              <x>101</x>
+              <y>217</y>
+              <w>43</w>
+              <h>34</h>
+              <connectedSymbol symbol="9"/>
+              <text>+spaces</text>
+              <text>*</text>
+            </end-1>
+            <end-2>
+              <x>101</x>
+              <y>337</y>
+              <w>60</w>
+              <h>34</h>
+              <connectedSymbol symbol="7"/>
+              <text>+createdBy</text>
+              <text>1</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="16">
+            <x>524</x>
+            <y>758</y>
+            <assocEnd-0 class="org.oplm.core.model.business.DocumentMaster" name="revisions"/>
+            <assocEnd-1 class="org.oplm.core.model.business.Document" name="documentMaster"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="8"/>
+              <connectY symbol="8"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.95187163</atX>
+              <atY>0.20377359</atY>
+            </point>
+            <point>
+              <connectX symbol="6"/>
+              <connectY symbol="6"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.009009009</atX>
+              <atY>0.37984496</atY>
+            </point>
+            <end-1>
+              <x>524</x>
+              <y>704</y>
+              <w>54</w>
+              <h>34</h>
+              <connectedSymbol symbol="8"/>
+              <text>+revisions</text>
+              <text>1</text>
+            </end-1>
+            <end-2>
+              <x>747</x>
+              <y>651</y>
+              <w>99</w>
+              <h>34</h>
+              <connectedSymbol symbol="6"/>
+              <text>+documentMaster</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="17">
+            <x>770</x>
+            <y>228</y>
+            <assocEnd-0 class="org.oplm.core.model.business.ProductStructure" name="productMaster"/>
+            <assocEnd-1 class="org.oplm.core.model.business.ProductMaster" name="usedByProducts"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="10"/>
+              <connectY symbol="10"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.36842105</atX>
+              <atY>0.9931507</atY>
+            </point>
+            <point>
+              <connectX symbol="3"/>
+              <connectY symbol="3"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.45945945</atX>
+              <atY>0.0625</atY>
+            </point>
+            <end-1>
+              <x>779</x>
+              <y>229</y>
+              <w>86</w>
+              <h>34</h>
+              <connectedSymbol symbol="10"/>
+              <text>+productMaster</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>779</x>
+              <y>349</y>
+              <w>93</w>
+              <h>34</h>
+              <connectedSymbol symbol="3"/>
+              <text>+usedByProducts</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="18">
+            <x>438</x>
+            <y>319</y>
+            <assocEnd-0 class="org.oplm.core.model.business.ProductStructure" name="product"/>
+            <assocEnd-1 class="org.oplm.core.model.business.Product" name="usesProducts"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.58115184</atX>
+              <atY>0.9698113</atY>
+            </point>
+            <point>
+              <connectX symbol="3"/>
+              <connectY symbol="3"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.009009009</atX>
+              <atY>0.5089286</atY>
+            </point>
+            <end-1>
+              <x>438</x>
+              <y>327</y>
+              <w>50</w>
+              <h>34</h>
+              <connectedSymbol symbol="11"/>
+              <text>+product</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>708</x>
+              <y>406</y>
+              <w>78</w>
+              <h>34</h>
+              <connectedSymbol symbol="3"/>
+              <text>+usesProducts</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="19">
+            <x>529</x>
+            <y>894</y>
+            <assocEnd-0 class="org.oplm.core.model.business.DocumentStructure" name="document"/>
+            <assocEnd-1 class="org.oplm.core.model.business.Document" name="usesDocuments"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="8"/>
+              <connectY symbol="8"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.97409326</atX>
+              <atY>0.7169811</atY>
+            </point>
+            <point>
+              <connectX symbol="2"/>
+              <connectY symbol="2"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.012903226</atX>
+              <atY>0.50526315</atY>
+            </point>
+            <end-1>
+              <x>534</x>
+              <y>938</y>
+              <w>63</w>
+              <h>34</h>
+              <connectedSymbol symbol="8"/>
+              <text>+document</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>741</x>
+              <y>938</y>
+              <w>92</w>
+              <h>34</h>
+              <connectedSymbol symbol="2"/>
+              <text>+usesDocuments</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="20">
+            <x>804</x>
+            <y>695</y>
+            <assocEnd-0 class="org.oplm.core.model.business.DocumentStructure" name="documentMaster"/>
+            <assocEnd-1 class="org.oplm.core.model.business.DocumentMaster" name="usedByDocuments"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="6"/>
+              <connectY symbol="6"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.36774194</atX>
+              <atY>0.7209302</atY>
+            </point>
+            <point>
+              <connectX symbol="2"/>
+              <connectY symbol="2"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.47741935</atX>
+              <atY>0.094736844</atY>
+            </point>
+            <end-1>
+              <x>815</x>
+              <y>731</y>
+              <w>99</w>
+              <h>34</h>
+              <connectedSymbol symbol="6"/>
+              <text>+documentMaster</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>815</x>
+              <y>890</y>
+              <w>107</w>
+              <h>34</h>
+              <connectedSymbol symbol="2"/>
+              <text>+usedByDocuments</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="21">
+            <x>413</x>
+            <y>323</y>
+            <assocEnd-0 class="org.oplm.core.model.business.ProductDocument" name="product"/>
+            <assocEnd-1 class="org.oplm.core.model.business.Product" name="documents"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.45026177</atX>
+              <atY>0.98490566</atY>
+            </point>
+            <point>
+              <connectX symbol="1"/>
+              <x>0</x>
+              <y>439</y>
+              <atX>0.06451613</atX>
+            </point>
+            <point>
+              <connectX symbol="1"/>
+              <connectY symbol="1"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.077419356</atX>
+              <atY>0.08928572</atY>
+            </point>
+            <end-1>
+              <x>356</x>
+              <y>327</y>
+              <w>50</w>
+              <h>34</h>
+              <connectedSymbol symbol="11"/>
+              <text>+product</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>358</x>
+              <y>458</y>
+              <w>68</w>
+              <h>34</h>
+              <connectedSymbol symbol="1"/>
+              <text>+documents</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="22">
+            <x>404</x>
+            <y>739</y>
+            <assocEnd-0 class="org.oplm.core.model.business.ProductDocument" name="document"/>
+            <assocEnd-1 class="org.oplm.core.model.business.Document" name="products"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="8"/>
+              <connectY symbol="8"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.32642487</atX>
+              <atY>0.13207547</atY>
+            </point>
+            <point>
+              <connectX symbol="1"/>
+              <connectY symbol="1"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.3548387</atX>
+              <atY>0.9464286</atY>
+            </point>
+            <end-1>
+              <x>401</x>
+              <y>704</y>
+              <w>63</w>
+              <h>34</h>
+              <connectedSymbol symbol="8"/>
+              <text>+document</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>401</x>
+              <y>570</y>
+              <w>55</w>
+              <h>34</h>
+              <connectedSymbol symbol="1"/>
+              <text>+products</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <width>1400</width>
+          <height>1000</height>
+          <lineStyle>RECTANGULAR</lineStyle>
+        </classDiagram>
+      </diagrams>
+      <rootName>src/java</rootName>
+    </javaPackage>
+    <javaPackage name="org.oplm.core.model.admin">
+      <projectName>oplm-core</projectName>
+      <path>src/java/org/oplm/core/model/admin</path>
+      <defaultClassStereotype>Persistent</defaultClassStereotype>
+      <classes>
+        <classifier name="Space">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="name">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="location">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="hostType">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="owner">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="ownerType">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="createdBy">
+              <type class="org.oplm.core.model.admin.User"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.User" name="spaces"/>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>1782873589</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>space_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Space</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Space.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.admin{Space.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="Organization">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="name">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="description">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="projects">
+              <type class="org.oplm.core.model.admin.Project"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.admin.Project()</value>
+              <inverse class="org.oplm.core.model.admin.Project" name="organizations"/>
+            </variable>
+            <variable name="address">
+              <type class="org.oplm.core.model.admin.Address"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <type>3</type>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>1777124708</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>organization_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Organization</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Organization.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.admin{Organization.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="User">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="username">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="passwd">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Transient"/>
+              </tags>
+            </variable>
+            <variable name="password">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="address">
+              <type class="org.oplm.core.model.admin.Address"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <type>3</type>
+            </variable>
+            <variable name="team">
+              <type class="org.oplm.core.model.admin.Team"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.admin.Team()</value>
+              <inverse class="org.oplm.core.model.admin.Team" name="user"/>
+            </variable>
+            <variable name="userRole">
+              <type class="org.oplm.core.model.admin.UserRole"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.UserRole" name="user"/>
+            </variable>
+            <variable name="email">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="active">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="passwdExpired">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="locked">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="spaces">
+              <type class="org.oplm.core.model.admin.Space"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.admin.Space()</value>
+              <inverse class="org.oplm.core.model.admin.Space" name="createdBy"/>
+            </variable>
+            <variable name="createdProducts">
+              <type class="org.oplm.core.model.business.Product"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.Product()</value>
+              <inverse class="org.oplm.core.model.business.Product" name="createdBy"/>
+            </variable>
+            <variable name="createdDocuments">
+              <type class="org.oplm.core.model.business.Document"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.Document()</value>
+              <inverse class="org.oplm.core.model.business.Document" name="createdBy"/>
+            </variable>
+            <variable name="updatedDocuments">
+              <type class="org.oplm.core.model.business.Document"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.business.Document()</value>
+              <inverse class="org.oplm.core.model.business.Document" name="lastUpdatedBy"/>
+            </variable>
+            <variable name="lastUpdatedProducts">
+              <type class="org.oplm.core.model.business.Product"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.business.Product" name="lastUpdatedBy"/>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>57574652</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>user_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>User</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>User.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.admin{User.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="Team">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="user">
+              <type class="org.oplm.core.model.admin.User"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.admin.User()</value>
+              <inverse class="org.oplm.core.model.admin.User" name="team"/>
+            </variable>
+            <variable name="name">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="description">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="teamRole">
+              <type class="org.oplm.core.model.admin.TeamRole"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.TeamRole" name="team"/>
+            </variable>
+            <variable name="url">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>57531278</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>team_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Team</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Team.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.admin{Team.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="Project">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="startDate">
+              <type class="java.util.Date"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="name">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="active">
+              <type basicType="boolean"/>
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="organizations">
+              <type class="org.oplm.core.model.admin.Organization"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.admin.Organization()</value>
+              <inverse class="org.oplm.core.model.admin.Organization" name="projects"/>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>1352423496</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>project_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Project</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Project.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.admin{Project.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="Address">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <tags>
+            <tag name="@Embeddable"/>
+          </tags>
+          <variables>
+            <variable name="address1">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="address2">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="city">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="state">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="country">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="zipcode">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>514042147</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>address_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Address</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Address.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.admin{Address.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="Role">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="name">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="description">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="userRole">
+              <type class="org.oplm.core.model.admin.UserRole"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.UserRole" name="role"/>
+            </variable>
+            <variable name="teamRole">
+              <type class="org.oplm.core.model.admin.TeamRole"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.TeamRole" name="role"/>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>57481639</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>role_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Role</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Role.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.admin{Role.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="UserRole">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="user">
+              <type class="org.oplm.core.model.admin.User"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.User" name="userRole"/>
+            </variable>
+            <variable name="role">
+              <type class="org.oplm.core.model.admin.Role"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.Role" name="userRole"/>
+            </variable>
+            <variable name="project">
+              <type class="org.oplm.core.model.admin.Project"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.admin.Project()</value>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-292381806</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>userrole_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>UserRole</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>UserRole.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.admin{UserRole.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="TeamRole">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="role">
+              <type class="org.oplm.core.model.admin.Role"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.Role" name="teamRole"/>
+            </variable>
+            <variable name="team">
+              <type class="org.oplm.core.model.admin.Team"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <inverse class="org.oplm.core.model.admin.Team" name="teamRole"/>
+            </variable>
+            <variable name="project">
+              <type class="org.oplm.core.model.admin.Project"/>
+              <multiplicity>*</multiplicity>
+              <access>1</access>
+              <value>new org.oplm.core.model.admin.Project()</value>
+            </variable>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-1694475996</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>teamrole_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>TeamRole</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>TeamRole.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.admin{TeamRole.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+        <classifier name="Policy">
+          <stereotype>Persistent</stereotype>
+          <interfaces>
+            <type>java.io.Serializable</type>
+          </interfaces>
+          <variables>
+            <variable name="serialVersionUID">
+              <type>long</type>
+              <multiplicity>1</multiplicity>
+              <modifiers>24</modifiers>
+              <access>2</access>
+              <value>-651971037</value>
+            </variable>
+            <variable name="id">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <stereotype>id</stereotype>
+              <tags>
+                <tag name="@Id"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>policy_id</name>
+                  </parameters>
+                </tag>
+                <tag name="@GeneratedValue"/>
+              </tags>
+            </variable>
+            <variable name="version">
+              <type>Long</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Version"/>
+                <tag name="@Column">
+                  <parameters>
+                    <name>OPT_LOCK</name>
+                  </parameters>
+                </tag>
+              </tags>
+            </variable>
+            <variable name="dateCreated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="lastUpdated">
+              <type>java.util.Date</type>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="type">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="name">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+            </variable>
+            <variable name="behaviour">
+              <type class="java.lang.String"/>
+              <multiplicity>0..1</multiplicity>
+              <access>1</access>
+              <tags>
+                <tag name="@Lob"/>
+              </tags>
+            </variable>
+          </variables>
+          <operations>
+            <operation name="constructor">
+              <multiplicity>1</multiplicity>
+              <access>1</access>
+              <generatedName>Policy</generatedName>
+              <method>
+                <statements>
+                  <javaCode></javaCode>
+                </statements>
+              </method>
+            </operation>
+          </operations>
+          <generatedFiles>
+            <name>Policy.java</name>
+            <compilationUnitId>=oplm-core/src\/java&lt;org.oplm.core.model.admin{Policy.java</compilationUnitId>
+          </generatedFiles>
+        </classifier>
+      </classes>
+      <diagrams>
+        <classDiagram name="AdministrationDiagram">
+          <showAttributes>true</showAttributes>
+          <showOperations>true</showOperations>
+          <tagSymbol id="1">
+            <x>260</x>
+            <y>800</y>
+            <connectedTo symbol="2"/>
+            <tag class="org.oplm.core.model.admin.Policy" variable="behaviour" id="@Lob"/>
+            <showNotSet>true</showNotSet>
+          </tagSymbol>
+          <classSymbol id="2">
+            <x>88</x>
+            <y>672</y>
+            <class class="org.oplm.core.model.admin.Policy"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+              <attribute>type</attribute>
+              <attribute>name</attribute>
+              <attribute>behaviour</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="3">
+            <x>727</x>
+            <y>569</y>
+            <class class="org.oplm.core.model.admin.TeamRole"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="4">
+            <x>333</x>
+            <y>274</y>
+            <class class="org.oplm.core.model.admin.UserRole"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="5">
+            <x>195</x>
+            <y>452</y>
+            <class class="org.oplm.core.model.admin.Role"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>name</attribute>
+              <attribute>description</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="6">
+            <x>733</x>
+            <y>4</y>
+            <class class="org.oplm.core.model.admin.Address"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>address1</attribute>
+              <attribute>address2</attribute>
+              <attribute>city</attribute>
+              <attribute>state</attribute>
+              <attribute>country</attribute>
+              <attribute>zipcode</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <tagSymbol id="7">
+            <x>802</x>
+            <y>4</y>
+            <connectedTo symbol="6"/>
+            <tag class="org.oplm.core.model.admin.Address" id="@Embeddable"/>
+            <showNotSet>true</showNotSet>
+          </tagSymbol>
+          <tagSymbol id="8">
+            <x>653</x>
+            <y>137</y>
+            <connectedTo symbol="11"/>
+            <tag class="org.oplm.core.model.admin.User" variable="passwd" id="@Transient"/>
+            <showNotSet>true</showNotSet>
+          </tagSymbol>
+          <classSymbol id="9">
+            <x>521</x>
+            <y>433</y>
+            <class class="org.oplm.core.model.admin.Project"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>startDate</attribute>
+              <attribute>name</attribute>
+              <attribute>active</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="10">
+            <x>706</x>
+            <y>289</y>
+            <class class="org.oplm.core.model.admin.Team"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>name</attribute>
+              <attribute>description</attribute>
+              <attribute>url</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="11">
+            <x>530</x>
+            <y>60</y>
+            <class class="org.oplm.core.model.admin.User"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>username</attribute>
+              <attribute>passwd</attribute>
+              <attribute>password</attribute>
+              <attribute>email</attribute>
+              <attribute>active</attribute>
+              <attribute>passwdExpired</attribute>
+              <attribute>locked</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="12">
+            <x>306</x>
+            <y>132</y>
+            <class class="org.oplm.core.model.admin.Organization"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>name</attribute>
+              <attribute>description</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <classSymbol id="13">
+            <x>124</x>
+            <y>52</y>
+            <class class="org.oplm.core.model.admin.Space"/>
+            <attributes autoDisplay="289" accessVisible="true">
+              <attribute>name</attribute>
+              <attribute>location</attribute>
+              <attribute>hostType</attribute>
+              <attribute>owner</attribute>
+              <attribute>ownerType</attribute>
+              <attribute>version</attribute>
+              <attribute>dateCreated</attribute>
+              <attribute>lastUpdated</attribute>
+            </attributes>
+            <operations autoDisplay="37" accessVisible="true" parametersVisible="true"/>
+          </classSymbol>
+          <association id="14">
+            <x>623</x>
+            <y>176</y>
+            <assocEnd-1 class="org.oplm.core.model.admin.User" name="address"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.6037736</atX>
+              <atY>0.54464287</atY>
+            </point>
+            <point>
+              <connectX symbol="6"/>
+              <connectY symbol="6"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.32</atX>
+              <atY>0.17791411</atY>
+            </point>
+            <end-1>
+              <x>623</x>
+              <y>60</y>
+              <connectedSymbol symbol="11"/>
+              <symbolType>3</symbolType>
+              <symbolLength>15</symbolLength>
+            </end-1>
+            <end-2>
+              <x>733</x>
+              <y>39</y>
+              <w>48</w>
+              <h>34</h>
+              <connectedSymbol symbol="6"/>
+              <text>+address</text>
+              <text>0..1</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="15">
+            <x>671</x>
+            <y>142</y>
+            <assocEnd-0 class="org.oplm.core.model.admin.Team" name="user"/>
+            <assocEnd-1 class="org.oplm.core.model.admin.User" name="team"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.9150943</atX>
+              <atY>0.38392857</atY>
+            </point>
+            <point>
+              <connectX symbol="10"/>
+              <connectY symbol="10"/>
+              <x>0</x>
+              <y>0</y>
+              <atY>0.32786885</atY>
+            </point>
+            <end-1>
+              <x>685</x>
+              <y>142</y>
+              <w>30</w>
+              <h>34</h>
+              <connectedSymbol symbol="11"/>
+              <text>+user</text>
+              <text>*</text>
+            </end-1>
+            <end-2>
+              <x>706</x>
+              <y>289</y>
+              <w>35</w>
+              <h>34</h>
+              <connectedSymbol symbol="10"/>
+              <text>+team</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="16">
+            <x>595</x>
+            <y>237</y>
+            <assocEnd-0 class="org.oplm.core.model.admin.UserRole" name="user"/>
+            <assocEnd-1 class="org.oplm.core.model.admin.User" name="userRole"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="11"/>
+              <connectY symbol="11"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.4245283</atX>
+              <atY>0.83035713</atY>
+            </point>
+            <point>
+              <connectX symbol="4"/>
+              <connectY symbol="4"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.47368422</atX>
+              <atY>0.40983605</atY>
+            </point>
+            <end-1>
+              <x>595</x>
+              <y>274</y>
+              <w>30</w>
+              <h>34</h>
+              <connectedSymbol symbol="11"/>
+              <text>+user</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>488</x>
+              <y>312</y>
+              <w>53</w>
+              <h>34</h>
+              <connectedSymbol symbol="4"/>
+              <text>+userRole</text>
+              <text>0..1</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="17">
+            <x>333</x>
+            <y>495</y>
+            <assocEnd-0 class="org.oplm.core.model.admin.UserRole" name="role"/>
+            <assocEnd-1 class="org.oplm.core.model.admin.Role" name="userRole"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="5"/>
+              <connectY symbol="5"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.8938053</atX>
+              <atY>0.33684212</atY>
+            </point>
+            <point>
+              <connectX symbol="4"/>
+              <connectY symbol="4"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.05263158</atX>
+              <atY>0.39344263</atY>
+            </point>
+            <end-1>
+              <x>341</x>
+              <y>452</y>
+              <w>28</w>
+              <h>34</h>
+              <connectedSymbol symbol="5"/>
+              <text>+role</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>341</x>
+              <y>369</y>
+              <w>53</w>
+              <h>34</h>
+              <connectedSymbol symbol="4"/>
+              <text>+userRole</text>
+              <text>0..1</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="18">
+            <x>336</x>
+            <y>560</y>
+            <assocEnd-0 class="org.oplm.core.model.admin.TeamRole" name="role"/>
+            <assocEnd-1 class="org.oplm.core.model.admin.Role" name="teamRole"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="5"/>
+              <connectY symbol="5"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.91150445</atX>
+              <atY>0.84210527</atY>
+            </point>
+            <point>
+              <connectX symbol="3"/>
+              <connectY symbol="3"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.14736842</atX>
+              <atY>0.73770493</atY>
+            </point>
+            <end-1>
+              <x>336</x>
+              <y>581</y>
+              <w>28</w>
+              <h>34</h>
+              <connectedSymbol symbol="5"/>
+              <text>+role</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>727</x>
+              <y>639</y>
+              <w>58</w>
+              <h>34</h>
+              <connectedSymbol symbol="3"/>
+              <text>+teamRole</text>
+              <text>0..1</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="19">
+            <x>816</x>
+            <y>604</y>
+            <assocEnd-0 class="org.oplm.core.model.admin.Team" name="teamRole"/>
+            <assocEnd-1 class="org.oplm.core.model.admin.TeamRole" name="team"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="3"/>
+              <connectY symbol="3"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.57894737</atX>
+              <atY>0.37704918</atY>
+            </point>
+            <point>
+              <connectX symbol="10"/>
+              <connectY symbol="10"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.54867256</atX>
+              <atY>0.94736844</atY>
+            </point>
+            <end-1>
+              <x>791</x>
+              <y>569</y>
+              <w>58</w>
+              <h>34</h>
+              <connectedSymbol symbol="3"/>
+              <text>+teamRole</text>
+              <text>0..1</text>
+            </end-1>
+            <end-2>
+              <x>791</x>
+              <y>435</y>
+              <w>35</w>
+              <h>34</h>
+              <connectedSymbol symbol="10"/>
+              <text>+team</text>
+              <text>0..1</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="20">
+            <x>372</x>
+            <y>325</y>
+            <assocEnd-1 class="org.oplm.core.model.admin.UserRole" name="project"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="4"/>
+              <connectY symbol="4"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.25263157</atX>
+              <atY>0.5409836</atY>
+            </point>
+            <point>
+              <connectX symbol="9"/>
+              <connectY symbol="9"/>
+              <x>1</x>
+              <y>0</y>
+              <atX>0.6494845</atX>
+              <atY>0.58928573</atY>
+            </point>
+            <end-1>
+              <x>372</x>
+              <y>369</y>
+              <connectedSymbol symbol="4"/>
+            </end-1>
+            <end-2>
+              <x>521</x>
+              <y>519</y>
+              <w>45</w>
+              <h>34</h>
+              <connectedSymbol symbol="9"/>
+              <text>+project</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="21">
+            <x>738</x>
+            <y>615</y>
+            <assocEnd-1 class="org.oplm.core.model.admin.TeamRole" name="project"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="3"/>
+              <connectY symbol="3"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.07368421</atX>
+              <atY>0.4918033</atY>
+            </point>
+            <point>
+              <connectX symbol="9"/>
+              <connectY symbol="9"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.9587629</atX>
+              <atY>0.9285714</atY>
+            </point>
+            <end-1>
+              <x>738</x>
+              <y>569</y>
+              <connectedSymbol symbol="3"/>
+            </end-1>
+            <end-2>
+              <x>676</x>
+              <y>568</y>
+              <w>45</w>
+              <h>34</h>
+              <connectedSymbol symbol="9"/>
+              <text>+project</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="22">
+            <x>447</x>
+            <y>233</y>
+            <assocEnd-0 class="org.oplm.core.model.admin.Project" name="organizations"/>
+            <assocEnd-1 class="org.oplm.core.model.admin.Organization" name="projects"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="12"/>
+              <connectY symbol="12"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.91150445</atX>
+              <atY>0.7894737</atY>
+            </point>
+            <point>
+              <connectX symbol="9"/>
+              <connectY symbol="9"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.44329897</atX>
+              <atY>0.035714287</atY>
+            </point>
+            <end-1>
+              <x>461</x>
+              <y>233</y>
+              <w>79</w>
+              <h>34</h>
+              <connectedSymbol symbol="12"/>
+              <text>+organizations</text>
+              <text>*</text>
+            </end-1>
+            <end-2>
+              <x>589</x>
+              <y>433</y>
+              <w>50</w>
+              <h>34</h>
+              <connectedSymbol symbol="9"/>
+              <text>+projects</text>
+              <text>*</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <association id="23">
+            <x>441</x>
+            <y>142</y>
+            <assocEnd-1 class="org.oplm.core.model.admin.Organization" name="address"/>
+            <showMultiplicity>true</showMultiplicity>
+            <point>
+              <connectX symbol="12"/>
+              <connectY symbol="12"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.8761062</atX>
+              <atY>0.08421053</atY>
+            </point>
+            <point>
+              <connectX symbol="6"/>
+              <connectY symbol="6"/>
+              <x>0</x>
+              <y>0</y>
+              <atX>0.05</atX>
+              <atY>0.0797546</atY>
+            </point>
+            <end-1>
+              <x>441</x>
+              <y>132</y>
+              <connectedSymbol symbol="12"/>
+              <symbolType>3</symbolType>
+              <symbolLength>15</symbolLength>
+            </end-1>
+            <end-2>
+              <x>733</x>
+              <y>19</y>
+              <w>48</w>
+              <h>34</h>
+              <connectedSymbol symbol="6"/>
+              <text>+address</text>
+              <text>0..1</text>
+            </end-2>
+            <style>RECTANGULAR</style>
+          </association>
+          <width>1400</width>
+          <height>1000</height>
+          <lineStyle>RECTANGULAR</lineStyle>
+        </classDiagram>
+      </diagrams>
+      <rootName>src/java</rootName>
+    </javaPackage>
+  </packages>
+  <basicTypes>
+    <basicType>void</basicType>
+    <basicType>int</basicType>
+    <basicType>boolean</basicType>
+    <basicType>float</basicType>
+  </basicTypes>
+  <codeGenerators>
+    <Java-Bean>
+      <generate-property-support>false</generate-property-support>
+    </Java-Bean>
+    <Unit-Test>
+      <src-dir>(default)</src-dir>
+      <add-junit3-libraries>false</add-junit3-libraries>
+    </Unit-Test>
+    <Persistent>
+      <platform>Java Persistence API</platform>
+      <add-hibernate3-libraries>false</add-hibernate3-libraries>
+      <create-helper-main>false</create-helper-main>
+      <generate-full-classnames>true</generate-full-classnames>
+      <generate-interfaces>false</generate-interfaces>
+      <annotate-getters>false</annotate-getters>
+      <generate-dto-associations-many>false</generate-dto-associations-many>
+      <src-dir>src/java</src-dir>
+      <generate-dto>false</generate-dto>
+      <create-persistence-xml>false</create-persistence-xml>
+      <generate-collections-as-set>true</generate-collections-as-set>
+      <create-hibernate-cfg-xml>true</create-hibernate-cfg-xml>
+      <add-hsqldb-libraries>false</add-hsqldb-libraries>
+    </Persistent>
+    <DAO>
+      <use-spring-templates>false</use-spring-templates>
+      <src-dir>(default)</src-dir>
+      <generate-interfaces>false</generate-interfaces>
+    </DAO>
+    <GWT-Service>
+      <version>1.5</version>
+    </GWT-Service>
+  </codeGenerators>
+  <properties>
+    <root-package>org.oplm.core.model</root-package>
+    <create-log4j-properties>false</create-log4j-properties>
+    <conf-dir>grails-app/conf</conf-dir>
+    <create-hibernate-properties>false</create-hibernate-properties>
+  </properties>
+  <codeGeneration>
+    <generate-equals-and-hashcode>true</generate-equals-and-hashcode>
+    <grammar>None</grammar>
+    <source-compatibility>5.0</source-compatibility>
+  </codeGeneration>
+  <diagramProperties>
+    <link-with-java-editor>false</link-with-java-editor>
+  </diagramProperties>
+</project>

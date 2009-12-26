@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+  <session-factory>
+    <mapping class="org.oplm.core.model.business.Product" />
+    <mapping class="org.oplm.core.model.business.ProductMaster" />
+    <mapping class="org.oplm.core.model.business.Document" />
+    <mapping class="org.oplm.core.model.business.DocumentMaster" />
+    <mapping class="org.oplm.core.model.business.ProductStructure" />
+    <mapping class="org.oplm.core.model.business.DocumentStructure" />
+    <mapping class="org.oplm.core.model.business.ProductDocument" />
+    <mapping class="org.oplm.core.model.admin.Space" />
+    <mapping class="org.oplm.core.model.admin.Organization" />
+    <mapping class="org.oplm.core.model.admin.User" />
+    <mapping class="org.oplm.core.model.admin.Team" />
+    <mapping class="org.oplm.core.model.admin.Project" />
+    <mapping class="org.oplm.core.model.admin.Address" />
+    <mapping class="org.oplm.core.model.admin.Role" />
+    <mapping class="org.oplm.core.model.admin.UserRole" />
+    <mapping class="org.oplm.core.model.admin.TeamRole" />
+  </session-factory>
+</hibernate-configuration>
+
